@@ -1,4 +1,5 @@
 mod config;
+
 use config::FragmentConfig;
 use qmetaobject::*;
 
@@ -6,31 +7,38 @@ use qmetaobject::*;
 struct ConfigBridge {
     base: qt_base_class!(trait QObject),
 
-    #[qt_property(String)]
+    #[qt_property]
     background: QString,
 
-    #[qt_property(u32)]
+    #[qt_property]
     width: u32,
 
-    #[qt_property(u32)]
+    #[qt_property]
     height: u32,
 
-    #[qt_property(bool)]
+    #[qt_property]
     frameless: bool,
 }
 
 fn main() {
+    // Load YAML config
     let cfg = FragmentConfig::load();
 
+    // Create QObject bridge
     let mut bridge = ConfigBridge::default();
     bridge.background = QString::from(cfg.shell.background.as_str());
     bridge.width = cfg.shell.width;
     bridge.height = cfg.shell.height;
     bridge.frameless = cfg.shell.frameless;
 
-    let mut engine = QmlEngine::new();
-    engine.set_object_property("Config", bridge);
+    // Pin the QObject
+    let bridge = QObjectBox::new(bridge);
 
+    // Create QML engine
+    let mut engine = QmlEngine::new();
+    engine.set_object_property("Config".into(), bridge.pinned());
+
+    // Load QML
     engine.load_data(r#"
         import QtQuick 2.15
         import QtQuick.Window 2.15
