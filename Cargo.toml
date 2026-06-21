@@ -5,5 +5,4 @@ edition = "2021"
 
 [dependencies]
 qmetaobject = "0.2"
-qt_widgets = "0.5"
 
