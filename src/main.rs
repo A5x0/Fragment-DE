@@ -1,37 +1,30 @@
 use qmetaobject::*;
-use qt_widgets::QApplication;
-use qt_widgets::QWidget;
-use qt_widgets::QColor;
 
 fn main() {
-    // Initialize Qt application
-    QApplication::init(|_app| {
-        // Create the shell window
-        let mut window = QWidget::new_0a();
+    // Initialize Qt (QML engine)
+    qmetaobject::qt_init_resources();
 
-        // Set window title (temporary)
-        window.set_window_title(&QString::from("Fragment Shell"));
+    let mut engine = QmlEngine::new();
 
-        // Make it frameless (Fragment controls its own chrome)
-        window.set_window_flags(
-            qt_widgets::qt_core::qt::WindowType::FramelessWindowHint.into()
-        );
+    // Load the QML window
+    engine.load_data(r#"
+        import QtQuick 2.15
+        import QtQuick.Window 2.15
 
-        // Set background color (temporary hardcoded, will come from config)
-        let color = QColor::from_rgb_3a(32, 32, 32, 255); // #202020
-        let palette = window.palette();
-        palette.set_color(qt_widgets::qt_core::q_palette::ColorRole::Window, &color);
-        window.set_palette(&palette);
-        window.set_auto_fill_background(true);
+        Window {
+            id: root
+            visible: true
+            width: 800
+            height: 600
+            title: "Fragment Shell"
 
-        // Resize to something visible
-        window.resize_2a(800, 600);
+            // Frameless window (like your QWidget flags)
+            flags: Qt.FramelessWindowHint
 
-        // Show the window (of course)
-        window.show();
+            // Background color (your #202020)
+            color: "#202020"
+        }
+    "#.into());
 
-        // Enter Qt event loop
-        QApplication::exec()
-    });
+    engine.exec();
 }
-
