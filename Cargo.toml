@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-qmetaobject = "0.2"
+qmetaobject = { version = "0.2", features = ["qtdeclarative"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.9"
