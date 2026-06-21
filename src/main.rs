@@ -1,8 +1,6 @@
 use qmetaobject::*;
 
 fn main() {
-    // Initialize Qt (QML engine)
-    qmetaobject::qt_init_resources();
 
     let mut engine = QmlEngine::new();
 
@@ -22,7 +20,7 @@ fn main() {
             flags: Qt.FramelessWindowHint
 
             // Background color (your #202020)
-            color: "#202020"
+            color: "r#202020"
         }
     "#.into());
 
