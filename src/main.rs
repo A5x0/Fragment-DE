@@ -3,40 +3,18 @@ mod config;
 use config::FragmentConfig;
 use qmetaobject::*;
 
-#[derive(QObject, Default)]
-struct ConfigBridge {
-    base: qt_base_class!(trait QObject),
-
-    #[qt_property]
-    background: QString,
-
-    #[qt_property]
-    width: u32,
-
-    #[qt_property]
-    height: u32,
-
-    #[qt_property]
-    frameless: bool,
-}
-
 fn main() {
     // Load YAML config
     let cfg = FragmentConfig::load();
 
-    // Create QObject bridge
-    let mut bridge = ConfigBridge::default();
-    bridge.background = QString::from(cfg.shell.background.as_str());
-    bridge.width = cfg.shell.width;
-    bridge.height = cfg.shell.height;
-    bridge.frameless = cfg.shell.frameless;
-
-    // Pin the QObject
-    let bridge = QObjectBox::new(bridge);
-
     // Create QML engine
     let mut engine = QmlEngine::new();
-    engine.set_object_property("Config".into(), bridge.pinned());
+
+    // Expose config values directly as QML context properties
+    engine.set_property("configWidth".into(), cfg.shell.width.into());
+    engine.set_property("configHeight".into(), cfg.shell.height.into());
+    engine.set_property("configBackground".into(), QString::from(cfg.shell.background.as_str()).into());
+    engine.set_property("configFrameless".into(), cfg.shell.frameless.into());
 
     // Load QML
     engine.load_data(r#"
@@ -45,10 +23,10 @@ fn main() {
 
         Window {
             visible: true
-            width: Config.width
-            height: Config.height
-            color: Config.background
-            flags: Config.frameless ? Qt.FramelessWindowHint : Qt.Window
+            width: configWidth
+            height: configHeight
+            color: configBackground
+            flags: configFrameless ? Qt.FramelessWindowHint : Qt.Window
         }
     "#.into());
 
