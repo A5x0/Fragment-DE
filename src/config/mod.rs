@@ -1,33 +1,13 @@
-use serde::Deserialize;
-use std::fs;
+use std::path::PathBuf;
 
-#[derive(Debug, Deserialize, Clone)]
-pub struct ShellConfig {
-    pub width: u32,
-    pub height: u32,
-    pub background: String,
-    pub frameless: bool,
+fn config_path() -> PathBuf {
+    let exe = std::env::current_exe().unwrap();
+    exe.parent().unwrap()               // target/debug/
+        .parent().unwrap()              // target/
+        .parent().unwrap()              // project root
+        .join("config/config.yaml")
 }
 
-#[derive(Debug, Deserialize, Clone)]
-pub struct ThemeConfig {
-    pub accent: String,
-    pub font: String,
-    pub radius: u32,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-pub struct FragmentConfig {
-    pub shell: ShellConfig,
-    pub theme: ThemeConfig,
-}
-
-impl FragmentConfig {
-    pub fn load() -> Self {
-        let data = fs::read_to_string("config.yaml")
-            .expect("Failed to read config.yaml");
-
-        serde_yaml::from_str(&data)
-            .expect("Failed to parse config.yaml")
-    }
-}
+let path = config_path();
+let contents = std::fs::read_to_string(&path)
+    .expect(&format!("Failed to read config at {:?}", path));
