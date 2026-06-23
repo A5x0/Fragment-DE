@@ -8,6 +8,6 @@ fn config_path() -> PathBuf {
         .join("config/config.yaml")
 }
 
-static path = config_path();
-let contents = std::fs::read_to_string(&path)
+let path = config_path();
+const contents = std::fs::read_to_string(&path)
     .expect(&format!("Failed to read config at {:?}", path));
