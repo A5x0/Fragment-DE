@@ -21,7 +21,7 @@ jobs:
           qtbase5-dev \
           qtdeclarative5-dev \
           qttools5-dev \
-          qt5-qmake
+          qt5-qmake \
           qml-module-qtquick2 \
           qml-module-qtquick-window2 \
           qml-module-qtquick-layouts \
