@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "type": "command",
+  "payload": {
+    "command": "move_window_to_workspace",
+    "window_id": 1003,
+    "workspace_id": 2
+  }
+}
