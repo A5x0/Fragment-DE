@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "type": "command",
+  "payload": {
+    "command": "focus_window",
+    "window_id": 1003
+  }
+}
