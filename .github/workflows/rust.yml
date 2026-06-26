@@ -22,6 +22,11 @@ jobs:
           qtdeclarative5-dev \
           qttools5-dev \
           qt5-qmake
+          qml-module-qtquick2 \
+          qml-module-qtquick-window2 \
+          qml-module-qtquick-layouts \
+          qml-module-qtquick-controls2 \
+          qml-module-qtgraphicaleffects \
 
     - name: Install X11 dependencies
       run: |
