@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "type": "command",
+  "payload": {
+    "command": "move_window",
+    "window_id": 1003,
+    "x": 200,
+    "y": 300
+  }
+}
