@@ -1,0 +1,10 @@
+shell:
+  width: 800
+  height: 600
+  background: "#202020"
+  frameless: true
+
+theme:
+  accent: "#4A90E2"
+  font: "Inter"
+  radius: 6
