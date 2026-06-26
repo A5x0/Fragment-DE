@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "type": "command",
+  "payload": {
+    "command": "close_window",
+    "window_id": 1003
+  }
+}
