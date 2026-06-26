@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "type": "command",
+  "payload": {
+    "command": "set_workspace",
+    "workspace_id": 2
+  }
+}
