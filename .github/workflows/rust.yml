@@ -23,11 +23,29 @@ jobs:
           qttools5-dev \
           qt5-qmake
 
+    - name: Install X11 dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y \
+         libxcb-xinerama0 \
+         libxcb-xkb1 \
+         libxkbcommon-x11-0 \
+         libxcb-randr0 \
+         libxcb-shape0 \
+         libxcb-icccm4 \
+         libxcb-keysyms1 \
+         libxcb-render-util0 \
+         xvfb
+
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
 
     - name: Build
       run: cargo build --verbose
-      
+
+    - name: Start virtual X server
+      run: |
+        Xvfb :99 -screen 0 1920x1080x24 &
+        echo "DISPLAY=:99" >> $GITHUB_ENV
+
     - name: Test
       run: cargo test
